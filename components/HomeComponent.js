@@ -4,11 +4,11 @@ import { Card } from 'react-native-elements';
 import { CAMPSITES } from '../shared/campsites';
 import { PROMOTIONS } from '../shared/promotions';
 import { PARTNERS } from '../shared/partners';
-
+ 
 function RenderItem({item}) {
     if (item) {
         return (
-            <Card
+            <Card 
                 featuredTitle={item.name}
                 image={require(`./images/react-lake.jpg`)}>
                 <Text style={{margin: 10}}>
