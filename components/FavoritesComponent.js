@@ -7,6 +7,9 @@ import { baseUrl } from '../shared/baseUrl';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { deleteFavorite } from '../redux/ActionCreators';
+import * as Animatable from 'react-native-animatable';
+import Animatable from 'react-native-reanimated';
+
 
 const mapStateToProps = state => {
     return {
@@ -27,49 +30,49 @@ class Favorites extends Component {
 
     render() {
 
-const {navigate } = this.props.navigation;
-const renderFavoriteItem = ({item}) => {
-    return (
-        <SwipeRow rightOpenValue={-100} style={styles.swipeRow}>
-            <View style={styles.deleteView}>
-                <TouchableOpacity
-                    style={styles.deleteTouchable}
-                    onPress={() => 
-                        Alert.alert(
-                            'Delete Favorite',
-                            'Are you sure you want delete your favorite campsite' + 
-                                item.name + 
-                                '?',
-                            [
-                                {
-                                    text: 'Cancel',
-                                    onPress: () =>  console.log(item.name + 'Not Deleted'),
-                                    style: 'Cancel'
-                                },
-                                {
-                                    text: 'OK',
-                                    onPress: () => this.props.deleteFavorite(item.id)
-                                },
-                            ],
-                            { cancelable: false }
-                        )
-                    }
-                >
-                    <Text style={styles.deleteText}>Delete</Text>
-                </TouchableOpacity>
-            </View>
-            
-            <View>
-                <ListItem
-                    title={item.name}
-                    subtitle={item.description}
-                    leftAvatar={{source: {uri: baseUrl + item.image}}}
-                    onPress={() => navigate('CampsiteInfo', {campsiteId: item.id})}
-                />
-            </View>
-        </SwipeRow>
-    );
-};
+        const { navigate } = this.props.navigation;
+        const renderFavoriteItem = ({ item }) => {
+            return (
+                <SwipeRow rightOpenValue={-100} style={styles.swipeRow}>
+                    <View style={styles.deleteView}>
+                        <TouchableOpacity
+                            style={styles.deleteTouchable}
+                            onPress={() =>
+                                Alert.alert(
+                                    'Delete Favorite',
+                                    'Are you sure you want delete your favorite campsite' +
+                                    item.name +
+                                    '?',
+                                    [
+                                        {
+                                            text: 'Cancel',
+                                            onPress: () => console.log(item.name + 'Not Deleted'),
+                                            style: 'Cancel'
+                                        },
+                                        {
+                                            text: 'OK',
+                                            onPress: () => this.props.deleteFavorite(item.id)
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                )
+                            }
+                        >
+                            <Text style={styles.deleteText}>Delete</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View>
+                        <ListItem
+                            title={item.name}
+                            subtitle={item.description}
+                            leftAvatar={{ source: { uri: baseUrl + item.image } }}
+                            onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
+                        />
+                    </View>
+                </SwipeRow>
+            );
+        };
 
         if (this.props.campsites.isLoading) {
             return <Loading />;
@@ -83,18 +86,20 @@ const renderFavoriteItem = ({item}) => {
         }
 
         return (
-            <FlatList
-                data={this.props.campsites.campsites.filter(
-                    campsite => this.props.favorites.includes(campsite.id)
-                )}
-                renderItem={renderFavoriteItem}
-                keyExtractor={item => item.id.toString()}
-            />
+            <Animatable.View animation='fadeInRightBig' duration={2000}>
+                <FlatList
+                    data={this.props.campsites.campsites.filter(
+                        campsite => this.props.favorites.includes(campsite.id)
+                    )}
+                    renderItem={renderFavoriteItem}
+                    keyExtractor={item => item.id.toString()}
+                />
+            </Animatable.View>
         );
     }
 }
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
     deleteView: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
