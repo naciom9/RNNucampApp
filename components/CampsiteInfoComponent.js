@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     Text, View, ScrollView, FlatList,
     Modal, Button, StyleSheet,
-    Alert, PanResponder 
+    Alert, PanResponder
 } from 'react-native';
 import { Card, Icon, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -30,7 +30,7 @@ function RenderCampsite(props) {
     const view = React.createRef();
 
     const recognizeDrag = ({ dx }) => (dx < -200) ? true : false;
-    const recognizeComment = ({ dx }) => (dx > 200) ? true : false;
+    const recognizeComment = ({ dx }) => (dx > 100) ? true : false;
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
