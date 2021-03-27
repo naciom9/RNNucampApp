@@ -45,8 +45,8 @@ class LoginTab extends Component {
 
     componentDidMount() {
         SecureStore.getItemAsync('userinfo')
-            .then(userdate => {
-                const iserinfo = JSON.parse(userdata);
+            .then(userdata => {
+                const userinfo = JSON.parse(userdata);
                 if (userinfo) {
                     this.setState({ username: userinfo.username });
                     this.setState({ password: userinfo.password });
